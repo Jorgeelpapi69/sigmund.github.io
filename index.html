@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Notas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        main {
+            padding: 2rem;
+        }
+
+        section {
+            margin-bottom: 2rem;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            color: #4CAF50;
+        }
+
+        form label {
+            display: block;
+            margin: 0.5rem 0 0.2rem;
+        }
+
+        form input, form select {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #report-output {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f9f9f9;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #4CAF50;
+            color: white;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.getElementById("grades-form");
+            const reportButton = document.getElementById("generate-report");
+            const reportOutput = document.getElementById("report-output");
+
+            let students = [];
+
+            form.addEventListener("submit", (event) => {
+                event.preventDefault();
+
+                const name = document.getElementById("student-name").value;
+                const specialty = "Informática"; // Solo permite Informática
+                const grade = document.getElementById("grade").value;
+
+                students.push({ name, specialty, grade });
+
+                alert("Estudiante registrado con éxito.");
+                form.reset();
+            });
+
+            reportButton.addEventListener("click", () => {
+                if (students.length === 0) {
+                    reportOutput.innerHTML = "<p>No hay datos registrados.</p>";
+                    return;
+                }
+
+                let reportHtml = "<h3>Boleta de Notas</h3><ul>";
+                students.forEach((student, index) => {
+                    reportHtml += `<li>${index + 1}. ${student.name} - ${student.specialty} - Nota: ${student.grade}</li>`;
+                });
+                reportHtml += "</ul>";
+
+                reportOutput.innerHTML = reportHtml;
+            });
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Registro de Notas por Especialidad</h1>
+    </header>
+    <main>
+        <section id="form-section">
+            <h2>Registrar Notas</h2>
+            <form id="grades-form">
+                <label for="student-name">Nombre del Estudiante:</label>
+                <input type="text" id="student-name" required>
+
+                <label for="grade">Nota:</label>
+                <input type="number" id="grade" min="0" max="20" required>
+
+                <button type="submit">Registrar</button>
+            </form>
+        </section>
+
+        <section id="report-section">
+            <h2>Reporte de Boleta de Notas</h2>
+            <button id="generate-report">Generar Reporte</button>
+            <div id="report-output"></div>
+        </section>
+    </main>
+    <footer>
+        <p>© 2025 Registro de Notas</p>
+    </footer>
+</body>
+</html>
